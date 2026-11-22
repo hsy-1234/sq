@@ -1,0 +1,31 @@
+# 武汉地铁数据样例（2 号线 + 4 号线）
+# 说明见 fun/metro/data/README.md。
+# 同一站编号出现在多条线路中时，会自动被视为换乘站。
+
+STATION S001 洪山广场
+STATION S002 中南路
+STATION S003 街道口
+STATION S004 光谷广场
+STATION S005 首义路
+STATION S006 武昌火车站
+
+LINE L02 2号线
+LINE L04 4号线
+
+# 2 号线：洪山广场 -> 中南路 -> 街道口 -> 光谷广场
+SEG L02 1 0
+STOP L02 S001 1.6 3
+STOP L02 S002 2.2 4
+STOP L02 S003 2.8 5
+STOP L02 S004 0 0
+
+# 4 号线：洪山广场 -> 中南路 -> 首义路 -> 武昌火车站
+SEG L04 1 0
+STOP L04 S001 1.8 3
+STOP L04 S002 2.5 4
+STOP L04 S005 1.7 3
+STOP L04 S006 0 0
+
+# 可选：覆盖默认换乘时间（分钟）
+TRANSFER S001 4.0
+TRANSFER S002 4.0

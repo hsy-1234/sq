@@ -21,11 +21,21 @@ APPS := lab01 lab02 lab03 lab04 smoke
 APP_BINS := $(patsubst %,$(BIN_DIR)/%.exe,$(APPS))
 APP_SRC := $(patsubst %,apps/%/main.c,$(APPS))
 
+# 趣味题与基础题隔离：源码在 fun/metro，单独链接 libds.a。
+METRO_DIR      := fun/metro
+METRO_INC      := -I$(METRO_DIR)/include
+METRO_SRC      := $(METRO_DIR)/main.c $(METRO_DIR)/src/ds_metro.c
+METRO_LIB_SRC  := $(METRO_DIR)/src/ds_metro.c
+METRO_HEADERS  := $(METRO_DIR)/include/ds/ds_metro.h
+METRO_BIN      := $(BIN_DIR)/metro.exe
+METRO_TEST_BIN := $(BIN_DIR)/test_metro.exe
+
 MKDIR = if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
 
-.PHONY: all lib clean run-smoke run-lab01 run-lab02 run-lab03 run-lab04
+.PHONY: all lib clean metro metro-test run-metro run-metro-test \
+        run-smoke run-lab01 run-lab02 run-lab03 run-lab04
 
-all: lib $(APP_BINS)
+all: lib $(APP_BINS) $(METRO_BIN)
 
 lib: $(LIB)
 
@@ -40,6 +50,25 @@ $(OBJ_DIR)/%.o: src/%.c
 $(BIN_DIR)/%.exe: apps/%/main.c $(LIB)
 	@$(call MKDIR,$(BIN_DIR))
 	$(CC) $(CFLAGS) $< $(LIB) $(LDLIBS) -o $@
+
+metro: $(METRO_BIN)
+
+$(METRO_BIN): $(METRO_SRC) $(METRO_HEADERS) $(LIB)
+	@$(call MKDIR,$(BIN_DIR))
+	$(CC) $(CFLAGS) $(METRO_INC) $(METRO_SRC) $(LIB) $(LDLIBS) -o $@
+
+metro-test: $(METRO_TEST_BIN)
+	$(METRO_TEST_BIN)
+
+$(METRO_TEST_BIN): $(METRO_DIR)/tests/test_metro.c $(METRO_LIB_SRC) $(METRO_HEADERS) $(LIB)
+	@$(call MKDIR,$(BIN_DIR))
+	$(CC) $(CFLAGS) $(METRO_INC) $(METRO_DIR)/tests/test_metro.c $(METRO_LIB_SRC) $(LIB) $(LDLIBS) -o $@
+
+run-metro: $(METRO_BIN)
+	$(METRO_BIN)
+
+run-metro-test: $(METRO_TEST_BIN)
+	$(METRO_TEST_BIN)
 
 run-smoke: $(BIN_DIR)/smoke.exe
 	$(BIN_DIR)/smoke.exe

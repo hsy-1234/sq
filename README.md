@@ -1,8 +1,8 @@
 # 数据结构与算法课程设计（C11 + MinGW-w64）
 
-本工程是《数据结构与算法分析》课程设计的基础代码库。所有数据结构以静态库
-`build/libds.a` 的形式提供，四道题目各自有独立的菜单程序，后续只需在
-`apps/labXX/main.c` 中填写业务回调。
+本工程是《数据结构与算法分析》课程设计的完整代码库。公共数据结构以静态库
+`build/libds.a` 的形式提供，四道基础题位于 `apps/labXX/`，趣味题位于
+`fun/`，各自有独立的菜单程序。
 
 ## 1. 目录结构
 
@@ -16,6 +16,8 @@ sq/
 │  ├─ lab03/            题目三：图（已实现）
 │  ├─ lab04/            题目四：查找与排序（已实现）
 │  └─ smoke/            基础库自检程序
+├─ fun/
+│  └─ metro/            趣味题：武汉轨道交通查询（独立工程）
 ├─ data/
 │  ├─ f1.txt            4615 条学生记录
 │  ├─ graph_bfs.txt     5 结点无向图（DFS/BFS 示例）
@@ -49,12 +51,14 @@ gdb --version
 在工程根目录执行：
 
 ```powershell
-mingw32-make all          # 编译静态库和 5 个可执行文件
+mingw32-make all          # 编译静态库、5 个基础题程序和地铁题
 mingw32-make run-smoke    # 运行基础库自检（应全部通过）
 mingw32-make run-lab01    # 运行题目一菜单
 mingw32-make run-lab02    # 运行题目二菜单
 mingw32-make run-lab03    # 运行题目三菜单
 mingw32-make run-lab04    # 运行题目四菜单
+mingw32-make run-metro    # 运行趣味题：武汉地铁菜单
+mingw32-make metro-test   # 编译并运行地铁模块单元测试
 mingw32-make clean        # 删除 build 目录
 ```
 
@@ -67,6 +71,8 @@ build/bin/lab01.exe
 build/bin/lab02.exe
 build/bin/lab03.exe
 build/bin/lab04.exe
+build/bin/metro.exe
+build/bin/test_metro.exe
 ```
 
 > 程序启动时会自动定位工程根目录并切换过去，因此从工程根目录、`build` 或
@@ -162,6 +168,10 @@ u v w
   Prim/Kruskal、连通性判断。
 - [x] 题目四：随机抽取 100 条、冒泡/快速排序、顺序/折半/哈希查找、
   ASL 成功/失败统计、7 种排序算法性能对比。
+- [x] 趣味题（武汉地铁）：两遍解析、13 条线路 / 298 站全量建图、四张图、
+  三种最短路、票价、统计、线路/站点/换乘/邻接表输出、DFS/BFS/MST、
+  全量回归测试。
+- [ ] 趣味题与导航软件的真实对比数据。
 - [ ] 课程设计报告。
 
 ## 7. 自检结果摘要
@@ -176,3 +186,5 @@ u v w
   Dijkstra 0→4 = 10、0→6 = 16。
 - 哈希表：1009 桶，装填因子 4.5738，ASL 成功约 2.90。
 - 100 条样本：7 种排序均正确，顺序/折半查找均命中。
+- 武汉地铁：13 条线路、298 座物理站点、49 个换乘站、352 个线路-站点节点，
+  总里程 575.20 km；宏图大道→武昌火车站最快 19.01 km / 38.0 min / 1 次换乘。
