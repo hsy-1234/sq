@@ -1,0 +1,95 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "构建全部",
+            "type": "shell",
+            "command": "mingw32-make",
+            "args": [
+                "all"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "清理构建产物",
+            "type": "shell",
+            "command": "mingw32-make",
+            "args": [
+                "clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "运行基础库自检",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/bin/smoke.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "构建全部",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "运行题目一",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/bin/lab01.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "构建全部",
+            "problemMatcher": []
+        },
+        {
+            "label": "运行题目二",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/bin/lab02.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "构建全部",
+            "problemMatcher": []
+        },
+        {
+            "label": "运行题目三",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/bin/lab03.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "构建全部",
+            "problemMatcher": []
+        },
+        {
+            "label": "运行题目四",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/bin/lab04.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "构建全部",
+            "problemMatcher": []
+        }
+    ]
+}
