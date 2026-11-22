@@ -43,6 +43,18 @@ void student_update_weight(Student *student);
 /** @brief 返回加权成绩；student 为 NULL 时返回 0。 */
 float student_weight(const Student *student);
 
+/** @brief 学号是否为恰好 5 位数字。 */
+bool student_valid_id(const char *id);
+
+/** @brief 姓名是否非空、长度小于 STUDENT_NAME_SIZE 且不含空白字符。 */
+bool student_valid_name(const char *name);
+
+/** @brief 专业编号是否为恰好 2 位数字。 */
+bool student_valid_major(const char *major);
+
+/** @brief 成绩是否在 0..100 内。 */
+bool student_valid_score(int score);
+
 /**
  * @brief 解析一行学生数据。
  * @param line 以 '\0' 结尾的一行文本。

@@ -173,6 +173,55 @@ DsStatus linklist_push_front(LinkList *list, Student value)
 }
 
 /**
+ * @brief 用数组批量重建链表。
+ *
+ * @param list        已初始化的链表。
+ * @param items       学生数组；count 为 0 时可为 NULL。
+ * @param count       元素个数。
+ * @param head_insert true 头插，false 尾插。
+ * @return DS_OK；list 未初始化或 items 非法返回 DS_ERR_NULL。
+ *
+ * 与逐条调用 push_back 不同，本函数只在尾插模式下维护一个 tail 指针，
+ * 因此不会每插入一个元素都从头走到表尾，整体为 O(count)。
+ *
+ * 实现采用“先建新链、后换旧链”的顺序：循环期间旧链表完全不动，
+ * 新链全部串好后才调用 clear 替换。这样即使构建过程失败，调用者
+ * 原来的数据仍然可用（内存分配失败由 ds_malloc 统一终止程序）。
+ */
+DsStatus linklist_assign(LinkList *list, const Student *items, size_t count,
+                         bool head_insert)
+{
+    LNode *new_head = NULL;
+    LNode *tail = NULL;
+    size_t i;
+
+    if (list == NULL || list->head == NULL || (items == NULL && count > 0)) {
+        return DS_ERR_NULL;
+    }
+
+    for (i = 0; i < count; ++i) {
+        LNode *node = linklist_new_node(items[i]);
+
+        if (head_insert) {
+            node->next = new_head;  //新结点成为新的首结点
+            new_head = node;
+        } else {
+            if (tail != NULL) {
+                tail->next = node;  //接到当前尾结点之后
+            } else {
+                new_head = node;    //第一个结点同时是首结点
+            }
+            tail = node;            //更新尾指针，保证尾插 O(1)
+        }
+    }
+
+    linklist_clear(list);           //新链已就绪，安全替换旧数据
+    list->head->next = new_head;
+    list->length = count;
+    return DS_OK;
+}
+
+/**
  * @brief 在第 pos 个位置插入学生。
  *
  * @param list  链表对象。

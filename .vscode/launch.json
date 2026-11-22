@@ -1,110 +1,129 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "调试基础库自检",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/smoke.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
+      "setupCommands": [
         {
-            "name": "调试基础库自检",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/smoke.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "启用 GDB 美化输出",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "构建全部"
-        },
-        {
-            "name": "调试题目一：线性表",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/lab01.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "启用 GDB 美化输出",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "构建全部"
-        },
-        {
-            "name": "调试题目二：二叉树",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/lab02.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "启用 GDB 美化输出",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "构建全部"
-        },
-        {
-            "name": "调试题目三：图",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/lab03.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "启用 GDB 美化输出",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "构建全部"
-        },
-        {
-            "name": "调试题目四：查找与排序",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bin/lab04.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "启用 GDB 美化输出",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "构建全部"
+          "description": "启用 GDB 美化输出",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
         }
-    ]
+      ],
+      "preLaunchTask": "构建全部"
+    },
+    {
+      "name": "调试题目一：线性表",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/lab01.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "启用 GDB 美化输出",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "构建全部"
+    },
+    {
+      "name": "调试题目二：二叉树",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/lab02.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "启用 GDB 美化输出",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "构建全部"
+    },
+    {
+      "name": "调试题目三：图",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/lab03.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "启用 GDB 美化输出",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "构建全部"
+    },
+    {
+      "name": "调试题目四：查找与排序",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/lab04.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:/MinGW64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "启用 GDB 美化输出",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "构建全部"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/hsy/Desktop/sq/apps/lab01",
+      "program": "c:/Users/hsy/Desktop/sq/apps/lab01/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
 }

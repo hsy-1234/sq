@@ -43,6 +43,21 @@ DsStatus linklist_push_back(LinkList *list, Student value);
 /** @brief 头插法插入元素（与课设骨架 CreateListF 对应）。 */
 DsStatus linklist_push_front(LinkList *list, Student value);
 
+/**
+ * @brief 用数组批量重建链表。
+ * @param list        已初始化的链表。
+ * @param items       学生数组；count 为 0 时可为 NULL。
+ * @param count       元素个数。
+ * @param head_insert true 头插（结果与 items 顺序相反），
+ *                    false 尾插（结果与 items 顺序一致）。
+ * @return DS_OK；参数非法返回 DS_ERR_NULL。
+ *
+ * 先串好新链，成功后才替换旧数据，失败时原链表保持不变。
+ * 时间复杂度 O(count)，空间复杂度 O(count)。
+ */
+DsStatus linklist_assign(LinkList *list, const Student *items, size_t count,
+                         bool head_insert);
+
 /** @brief 在第 pos 个位置插入，pos ∈ [1, length + 1]。 */
 DsStatus linklist_insert(LinkList *list, size_t pos, Student value);
 

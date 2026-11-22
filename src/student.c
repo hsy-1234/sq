@@ -64,12 +64,73 @@ float student_weight(const Student *student)
 }
 
 /**
- * @brief 判断成绩是否在 0..100 内。
+ * @brief 判断学号是否恰好为 5 位数字。
+ * @param id 以 '\0' 结尾的学号字符串。
+ * @return 合法返回 true；id 为 NULL、长度不为 5 或含非数字字符返回 false。
  *
+ * 文件解析和交互式录入共用这一条规则，避免两处校验标准不一致。
+ */
+bool student_valid_id(const char *id)
+{
+    size_t i;
+
+    if (id == NULL) {
+        return false;
+    }
+    for (i = 0; i < 5; ++i) {
+        if (!isdigit((unsigned char)id[i])) {
+            return false;
+        }
+    }
+    return id[5] == '\0';
+}
+
+/**
+ * @brief 判断姓名是否合法。
+ * @param name 以 '\0' 结尾的姓名。
+ * @return 非空、长度小于 STUDENT_NAME_SIZE 且不含空白字符时返回 true。
+ */
+bool student_valid_name(const char *name)
+{
+    size_t i;
+    size_t length;
+
+    if (name == NULL) {
+        return false;
+    }
+    length = strlen(name);
+    if (length == 0 || length >= STUDENT_NAME_SIZE) {
+        return false;
+    }
+    for (i = 0; i < length; ++i) {
+        if (isspace((unsigned char)name[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * @brief 判断专业编号是否恰好为 2 位数字。
+ * @param major 以 '\0' 结尾的专业编号。
+ * @return 合法返回 true。
+ */
+bool student_valid_major(const char *major)
+{
+    if (major == NULL) {
+        return false;
+    }
+    return isdigit((unsigned char)major[0]) &&
+           isdigit((unsigned char)major[1]) &&
+           major[2] == '\0';
+}
+
+/**
+ * @brief 判断成绩是否在 0..100 内。
  * @param score 成绩。
  * @return 合法返回 true。
  */
-static bool score_in_range(int score)
+bool student_valid_score(int score)
 {
     return score >= 0 && score <= 100;
 }
@@ -87,7 +148,7 @@ static bool score_in_range(int score)
  *      的字符数；
  *   2. sscanf 返回 11 表示 11 个字段都成功转换（%n 不计入返回值）；
  *   3. 跳过 %n 之后的空白，若还有非空白字符，说明行尾有多余内容，拒绝；
- *   4. 校验学号恰好 5 位、姓名/专业非空、8 门成绩都在 0..100；
+ *   4. 调用 student_valid_* 校验学号、姓名、专业编号和 8 门成绩；
  *   5. 拷贝到输出结构体并计算加权成绩。
  *
  * 宽度限制（%5s/%15s/%3s）与结构体数组大小严格对应，既防止缓冲区
@@ -122,12 +183,14 @@ bool student_parse_line(const char *line, Student *out)
     if (line[consumed] != '\0') {
         return false;
     }
-    if (strlen(id) != 5 || name[0] == '\0' || major[0] == '\0') {
+    if (!student_valid_id(id) || !student_valid_name(name) ||
+        !student_valid_major(major)) {
         return false;
     }
-    if (!score_in_range(g1) || !score_in_range(g2) || !score_in_range(g3) ||
-        !score_in_range(p1) || !score_in_range(p2) || !score_in_range(p3) ||
-        !score_in_range(c1) || !score_in_range(c2)) {
+    if (!student_valid_score(g1) || !student_valid_score(g2) ||
+        !student_valid_score(g3) || !student_valid_score(p1) ||
+        !student_valid_score(p2) || !student_valid_score(p3) ||
+        !student_valid_score(c1) || !student_valid_score(c2)) {
         return false;
     }
 

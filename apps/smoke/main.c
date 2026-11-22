@@ -2,10 +2,13 @@
  * @file    main.c
  * @brief   基础库自检程序：逐项验证各模块，全部通过返回 0。
  *
- * 运行方式（工程根目录）：
+ * 运行方式：
  *   build\bin\smoke.exe
  * 或：
  *   mingw32-make run-smoke
+ *
+ * 程序启动时会自动切换到工程根目录，因此从 build 或 build/bin 下
+ * 直接运行也能找到 data/f1.txt。
  */
 
 #include <stdio.h>
@@ -25,6 +28,7 @@
 #include "ds/ds_btree.h"
 #include "ds/ds_graph.h"
 #include "ds/ds_hash.h"
+#include "ds/ds_path.h"
 #include "ds/ds_sort.h"
 #include "ds/ds_search.h"
 
@@ -115,6 +119,18 @@ static void test_students(Student **out_students, size_t *out_count)
     check(strlen(students[0].ID) == 5, "首条记录学号为 5 位");
     check(students[0].weights >= 0.0f && students[0].weights <= 480.0f,
           "首条记录加权成绩在 [0,480] 内");
+    check(student_valid_id("00002") && !student_valid_id("0000") &&
+              !student_valid_id("0000x"),
+          "学号校验规则");
+    check(student_valid_name("hqghum") && !student_valid_name("") &&
+              !student_valid_name("hq ghum"),
+          "姓名校验规则");
+    check(student_valid_major("13") && !student_valid_major("1") &&
+              !student_valid_major("ab"),
+          "专业编号校验规则");
+    check(student_valid_score(0) && student_valid_score(100) &&
+              !student_valid_score(-1) && !student_valid_score(101),
+          "成绩校验规则");
     printf("       首条：%s %s 专业%s 加权%.2f\n",
            students[0].ID, students[0].name, students[0].pro_number,
            students[0].weights);
@@ -210,6 +226,23 @@ static void test_linklist(const Student *students, size_t count)
     check(list.length == count - 1, "逆置不改变链表长度");
     check(linklist_get(&list, 1, &value) == DS_OK, "逆置后读取首结点");
     printf("       逆置后首结点：%s\n", value.ID);
+
+    {
+        LinkList bulk;
+
+        check_status(linklist_init(&bulk), DS_OK, "初始化批量建表链表");
+        check_status(linklist_assign(&bulk, students, 3, false), DS_OK,
+                     "批量尾插建表");
+        check(bulk.length == 3 &&
+                  strcmp(bulk.head->next->data.ID, students[0].ID) == 0,
+              "批量尾插保持数组顺序");
+        check_status(linklist_assign(&bulk, students, 3, true), DS_OK,
+                     "批量头插建表");
+        check(bulk.length == 3 &&
+                  strcmp(bulk.head->next->data.ID, students[2].ID) == 0,
+              "批量头插结果逆序");
+        linklist_destroy(&bulk);
+    }
 
     linklist_destroy(&list);
     check(list.head == NULL && list.length == 0, "销毁链表");
@@ -511,6 +544,9 @@ int main(void)
 
     ds_console_init();
     ds_console_title("数据结构基础库自检");
+
+    /* 从 build 或 build/bin 启动时也能稳定找到 data/ 下的测试数据。 */
+    check_status(ds_path_set_project_root(), DS_OK, "定位工程根目录");
 
     test_students(&students, &count);
     if (students != NULL) {
